@@ -28,7 +28,6 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.PrimitiveObjectIn
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableBinaryObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableBooleanObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableByteObjectInspector;
-import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableDateObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableDoubleObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableFloatObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableHiveDecimalObjectInspector;
@@ -36,6 +35,7 @@ import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableHiveVarch
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableIntObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableLongObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableShortObjectInspector;
+import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableDateObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.SettableTimestampObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.VoidObjectInspector;
 import org.apache.hadoop.hive.serde2.objectinspector.primitive.WritableStringObjectInspector;
@@ -176,7 +176,6 @@ public final class ObjectInspectorConverters {
     // TODO: Add support for UNION once SettableUnionObjectInspector is implemented.
     switch (outputOI.getCategory()) {
     case PRIMITIVE:
-<<<<<<< HEAD
       PrimitiveObjectInspector primOutputOI = (PrimitiveObjectInspector) outputOI;
       return PrimitiveObjectInspectorFactory.
           getPrimitiveWritableObjectInspector(primOutputOI);
@@ -192,32 +191,6 @@ public final class ObjectInspectorConverters {
         structFieldNames.add(listField.getFieldName());
         structFieldObjectInspectors.add(getConvertedOI(listField.getFieldObjectInspector(),
             listField.getFieldObjectInspector(), false));
-=======
-      PrimitiveObjectInspector primInputOI = (PrimitiveObjectInspector) inputOI;
-      return PrimitiveObjectInspectorFactory.
-          getPrimitiveWritableObjectInspector(primInputOI.getPrimitiveCategory());
-    case STRUCT:
-      StructObjectInspector structOutputOI = (StructObjectInspector) outputOI;
-      if (structOutputOI.isSettable()) {
-        return outputOI;
-      }
-      else {
-        // create a standard settable struct object inspector
-        List<? extends StructField> listFields = structOutputOI.getAllStructFieldRefs();
-        List<String> structFieldNames = new ArrayList<String>(listFields.size());
-        List<ObjectInspector> structFieldObjectInspectors = new ArrayList<ObjectInspector>(
-            listFields.size());
-
-        for (StructField listField : listFields) {
-          structFieldNames.add(listField.getFieldName());
-          structFieldObjectInspectors.add(getConvertedOI(listField.getFieldObjectInspector(),
-              listField.getFieldObjectInspector(), false));
-        }
-
-        return ObjectInspectorFactory.getStandardStructObjectInspector(
-                structFieldNames,
-                structFieldObjectInspectors);
->>>>>>> 24b2f5ecc39f04d6034347930a0428bc1f7cc902
       }
       return ObjectInspectorFactory.getStandardStructObjectInspector(
           structFieldNames,
@@ -225,7 +198,6 @@ public final class ObjectInspectorConverters {
     case LIST:
       ListObjectInspector listOutputOI = (ListObjectInspector) outputOI;
       return ObjectInspectorFactory.getStandardListObjectInspector(
-<<<<<<< HEAD
           getConvertedOI(listOutputOI.getListElementObjectInspector(),
               listOutputOI.getListElementObjectInspector(), false));
     case MAP:
@@ -235,13 +207,6 @@ public final class ObjectInspectorConverters {
               mapOutputOI.getMapKeyObjectInspector(), false),
           getConvertedOI(mapOutputOI.getMapValueObjectInspector(),
               mapOutputOI.getMapValueObjectInspector(), false));
-=======
-          listOutputOI.getListElementObjectInspector());
-    case MAP:
-      MapObjectInspector mapOutputOI = (MapObjectInspector) outputOI;
-      return ObjectInspectorFactory.getStandardMapObjectInspector(
-          mapOutputOI.getMapKeyObjectInspector(), mapOutputOI.getMapValueObjectInspector());
->>>>>>> 24b2f5ecc39f04d6034347930a0428bc1f7cc902
     default:
       throw new RuntimeException("Hive internal error: conversion of "
           + inputOI.getTypeName() + " to " + outputOI.getTypeName()
