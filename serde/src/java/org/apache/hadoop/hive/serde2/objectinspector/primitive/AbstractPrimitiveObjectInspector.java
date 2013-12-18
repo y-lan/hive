@@ -31,6 +31,9 @@ public abstract class AbstractPrimitiveObjectInspector implements
   transient PrimitiveTypeEntry typeEntry;
   protected BaseTypeParams typeParams;
 
+  protected AbstractPrimitiveObjectInspector() {
+    super();
+  }
   /**
    * Construct a AbstractPrimitiveObjectInspector.
    */
