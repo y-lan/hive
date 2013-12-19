@@ -49,4 +49,9 @@ public class HiveSessionHookContextImpl implements HiveSessionHookContext {
   public String getSessionHandle() {
     return hiveSession.getSessionHandle().toString();
   }
+
+  public HiveSession getSession() {
+    return hiveSession;
+  }
+
 }
