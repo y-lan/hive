@@ -27,8 +27,8 @@
       <commons-io.version>2.4</commons-io.version>
       <guava.version>11.0.2</guava.version>
       <hadoop20.version>1.0.3</hadoop20.version>
-      <hadoop23.version>2.0.3-alpha</hadoop23.version>
-      <hbase.version>0.94.5</hbase.version>
+      <hadoop23.version>2.0.0-cdh4.5.0</hadoop23.version>
+      <hbase.version>0.94.6-cdh4.5.0</hbase.version>
       <hcatalog.version>${project.version}</hcatalog.version>
       <hive.version>${project.version}</hive.version>
       <jackson.version>1.9.2</jackson.version>
@@ -181,6 +181,14 @@
 
   <repositories>
     <!-- This is necessary for hive-metastore dependencies. -->
+    <repository>
+      <id>cdh.releases.repo</id>
+      <url>https://repository.cloudera.com/content/groups/cdh-releases-rcs</url>
+      <name>CDH Releases Repository</name>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
     <repository>
       <id>datanucleus</id>
       <name>datanucleus maven repository</name>
