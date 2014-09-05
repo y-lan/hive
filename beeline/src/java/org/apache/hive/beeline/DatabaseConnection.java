@@ -70,9 +70,12 @@ class DatabaseConnection {
 
 
   void setCompletions(boolean skipmeta) throws SQLException, IOException {
-    final String extraNameCharacters =
-        getDatabaseMetaData() == null || getDatabaseMetaData().getExtraNameCharacters() == null ? ""
-            : getDatabaseMetaData().getExtraNameCharacters();
+      String s = "";
+      try {
+          s = getDatabaseMetaData().getExtraNameCharacters();
+      } catch (SQLException e) {}
+      final String extraNameCharacters =
+        getDatabaseMetaData() == null || s == null ? "" : s;
 
     // setup the completor for the database
     sqlCompletor = new ArgumentCompletor(
