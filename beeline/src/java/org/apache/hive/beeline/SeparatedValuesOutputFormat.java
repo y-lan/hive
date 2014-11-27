@@ -49,17 +49,20 @@ class SeparatedValuesOutputFormat implements OutputFormat {
     return count - 1; // sans header row
   }
 
-  public void printRow(Rows rows, Rows.Row row) {
-    String[] vals = row.values;
-    StringBuilder buf = new StringBuilder();
-    for (int i = 0; i < vals.length; i++) {
-      buf.append(buf.length() == 0 ? "" : "" + getSeparator())
-          .append('\'')
-          .append(vals[i] == null ? "" : vals[i])
-          .append('\'');
+    public void printRow(Rows rows, Rows.Row row)
+    {
+        if (!row.isMeta || beeLine.getOpts().getShowHeader()) {
+            String[] vals = row.values;
+            StringBuilder buf = new StringBuilder();
+            for (int i = 0; i < vals.length; i++) {
+                buf.append(buf.length() == 0 ? "" : "" + getSeparator())
+                        .append('\'')
+                        .append(vals[i] == null ? "" : vals[i])
+                        .append('\'');
+            }
+            beeLine.output(buf.toString());
+        }
     }
-    beeLine.output(buf.toString());
-  }
 
   public void setSeparator(char separator) {
     this.separator = separator;
