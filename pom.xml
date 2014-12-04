@@ -114,8 +114,9 @@
     <guava.version>11.0.2</guava.version>
     <groovy.version>2.1.6</groovy.version>
     <hadoop-20.version>0.20.2</hadoop-20.version>
-    <hadoop-20S.version>1.2.1</hadoop-20S.version>
-    <hadoop-23.version>2.5.0</hadoop-23.version>
+    <hadoop-20S.version>2.0.0-mr1-cdh4.5.0</hadoop-20S.version>
+    <hadoop-23.version>2.0.0-cdh4.5.0</hadoop-23.version>
+    <hadoop-23o.version>2.5.0</hadoop-23o.version>
     <hadoop.bin.path>${basedir}/${hive.path.to.root}/testutils/hadoop</hadoop.bin.path>
     <hbase.hadoop1.version>0.98.3-hadoop1</hbase.hadoop1.version>
     <hbase.hadoop2.version>0.98.3-hadoop2</hbase.hadoop2.version>
@@ -148,7 +149,7 @@
     <netty.version>3.4.0.Final</netty.version>
     <parquet.version>1.5.0</parquet.version>
     <pig.version>0.12.0</pig.version>
-    <protobuf.version>2.5.0</protobuf.version>
+    <protobuf.version>2.4.0a</protobuf.version>
     <stax.version>1.0.1</stax.version>
     <slf4j.version>1.7.5</slf4j.version>
     <ST4.version>4.0.4</ST4.version>
@@ -166,6 +167,15 @@
   </properties>
 
   <repositories>
+    <repository>
+      <id>cdh.releases.repo</id>
+      <!--<url>https://repository.cloudera.com/content/groups/cdh-releases-rcs</url>-->
+      <url>https://repository.cloudera.com/artifactory/repo/</url>
+      <name>CDH Releases Repository</name>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
     <repository>
       <id>datanucleus</id>
       <name>datanucleus maven repository</name>
@@ -591,8 +601,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven.compiler.plugin.version}</version>
           <configuration>
-            <source>1.6</source>
-            <target>1.6</target>
+            <source>1.7</source>
+            <target>1.7</target>
           </configuration>
         </plugin>
         <plugin>
@@ -1085,22 +1095,7 @@
           </dependency>
           <dependency>
             <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-common</artifactId>
-            <version>${hbase.hadoop2.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-hadoop-compat</artifactId>
-            <version>${hbase.hadoop2.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-hadoop2-compat</artifactId>
-            <version>${hbase.hadoop2.version}</version>
-          </dependency>
-          <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-server</artifactId>
+            <artifactId>hbase</artifactId>
             <version>${hbase.hadoop2.version}</version>
           </dependency>
           <dependency>

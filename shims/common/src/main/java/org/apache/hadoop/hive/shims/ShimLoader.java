@@ -126,6 +126,7 @@ public abstract class ShimLoader {
 
   private static <T> T loadShims(Map<String, String> classMap, Class<T> xface) {
     String vers = getMajorVersion();
+    vers = "0.20S";
     String className = classMap.get(vers);
     return createShim(className, xface);
   }

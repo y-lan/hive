@@ -59,8 +59,10 @@ import org.apache.hadoop.mapreduce.JobStatus;
 import org.apache.hadoop.mapreduce.OutputFormat;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.apache.hadoop.mapreduce.TaskAttemptID;
+import org.apache.hadoop.mapreduce.task.JobContextImpl;
+import org.apache.hadoop.mapreduce.task.TaskAttemptContextImpl;
 import org.apache.hadoop.mapreduce.TaskID;
-import org.apache.hadoop.security.KerberosName;
+import org.apache.hadoop.security.authentication.util.KerberosName;
 import org.apache.hadoop.security.UserGroupInformation;
 import org.apache.hadoop.util.Progressable;
 import org.apache.hadoop.util.VersionInfo;
@@ -85,20 +87,20 @@ public class Hadoop20SShims extends HadoopShimsSecure {
   @Override
   public JobTrackerState getJobTrackerState(ClusterStatus clusterStatus) throws Exception {
     JobTrackerState state;
-    switch (clusterStatus.getJobTrackerState()) {
+    switch (clusterStatus.getJobTrackerStatus()) {
     case INITIALIZING:
       return JobTrackerState.INITIALIZING;
     case RUNNING:
       return JobTrackerState.RUNNING;
     default:
-      String errorMsg = "Unrecognized JobTracker state: " + clusterStatus.getJobTrackerState();
+      String errorMsg = "Unrecognized JobTracker state: " + clusterStatus.getJobTrackerStatus();
       throw new Exception(errorMsg);
     }
   }
 
   @Override
   public org.apache.hadoop.mapreduce.TaskAttemptContext newTaskAttemptContext(Configuration conf, final Progressable progressable) {
-    return new org.apache.hadoop.mapreduce.TaskAttemptContext(conf, new TaskAttemptID()) {
+    return new TaskAttemptContextImpl(conf, new TaskAttemptID()) {
       @Override
       public void progress() {
         progressable.progress();
@@ -113,7 +115,7 @@ public class Hadoop20SShims extends HadoopShimsSecure {
 
   @Override
   public org.apache.hadoop.mapreduce.JobContext newJobContext(Job job) {
-    return new org.apache.hadoop.mapreduce.JobContext(job.getConfiguration(), job.getJobID());
+    return new JobContextImpl(job.getConfiguration(), job.getJobID());
   }
 
   @Override
@@ -281,7 +283,7 @@ public class Hadoop20SShims extends HadoopShimsSecure {
 
     @Override
     public TaskAttemptContext createTaskAttemptContext(Configuration conf, TaskAttemptID taskId) {
-      return new TaskAttemptContext(conf, taskId);
+      return new TaskAttemptContextImpl(conf, taskId);
     }
 
     @Override
@@ -303,7 +305,7 @@ public class Hadoop20SShims extends HadoopShimsSecure {
     @Override
     public JobContext createJobContext(Configuration conf,
                                        JobID jobId) {
-      return new JobContext(conf, jobId);
+      return new JobContextImpl(conf, jobId);
     }
 
     @Override
