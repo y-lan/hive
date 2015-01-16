@@ -59,5 +59,11 @@
       <version>${hadoop-20.version}</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>${commons-lang.version}</version>
+      <optional>true</optional>
+    </dependency>
   </dependencies>
 </project>

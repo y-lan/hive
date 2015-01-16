@@ -85,9 +85,12 @@ class SeparatedValuesOutputFormat implements OutputFormat {
     return strWriter.toString();
   }
 
-  public void printRow(Rows rows, Rows.Row row) {
-    String[] vals = row.values;
-    String formattedStr = getFormattedStr(vals);
-    beeLine.output(formattedStr);
-  }
+    public void printRow(Rows rows, Rows.Row row)
+    {
+      if (!row.isMeta || beeLine.getOpts().getShowHeader()) {
+        String[] vals = row.values;
+        String formattedStr = getFormattedStr(vals);
+        beeLine.output(formattedStr);
+      }
+    }
 }

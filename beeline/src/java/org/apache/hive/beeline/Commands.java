@@ -610,7 +610,8 @@ public class Commands {
           + "| TRANSACTION_SERIALIZABLE>");
     }
 
-    beeLine.getDatabaseConnection().getConnection().setTransactionIsolation(i);
+    beeLine.getDatabaseConnection().getConnection();
+        //.setTransactionIsolation(i);
 
     int isol = beeLine.getDatabaseConnection().getConnection().getTransactionIsolation();
     final String isoldesc;
@@ -801,6 +802,9 @@ public class Commands {
                 logThread = null;
               }
               rs.close();
+              if (rs.getClass().getName() == "com.treasure_data.jdbc.TDResultSet") {
+                break;
+              }
             }
           } while (BeeLine.getMoreResults(stmnt));
         } else {
